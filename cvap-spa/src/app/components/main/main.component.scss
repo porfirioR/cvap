@@ -1,0 +1,10 @@
+div {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) 5fr;
+  border: 1px solid blue
+}
+
+app-nav {
+  background-color: aqua;
+  height: 100vh;
+}
