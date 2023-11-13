@@ -7,8 +7,7 @@ export class MailController {
   constructor(private emailService: EmailService) {}
 
   @Post()
-  sendEmail(@Body() emailRequest: EmailRequest): string {
-    this.emailService.sendEmail(emailRequest);
-    return '';
+  async sendEmail(@Body() emailRequest: EmailRequest) {
+    return await this.emailService.sendEmail(emailRequest);
   }
 }

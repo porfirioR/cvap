@@ -7,11 +7,10 @@ import { EmailRequest } from '../models/email-request';
 export class EmailService {
   constructor(private mailerService: MailerService) { }
 
-  public sendEmail(request: EmailRequest): void {
+  public async sendEmail(request: EmailRequest) {
     const template = `
       <!DOCTYPE html>
       <html lang="en">
-      
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,16 +26,10 @@ export class EmailService {
       </body>
       </html>
     `;
-    this.mailerService.sendMail({
+    return this.mailerService.sendMail({
       to: request.email,
       subject: 'Email',
       html: template
-    })
-    .then((x) => {
-      console.log(x);
-    })
-    .catch((e) => {
-      console.error(e);
     });
   }
 }

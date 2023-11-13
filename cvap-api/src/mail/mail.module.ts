@@ -3,6 +3,8 @@ import { Global, Module } from '@nestjs/common';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
 import { EmailService } from './email.service';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '../../.env' });
 
 @Global()
 @Module({
@@ -15,12 +17,12 @@ import { EmailService } from './email.service';
           ignoreTLS: true,
           secure: false,
           auth: {
-            user: '',
-            pass: '',
+            user: process.env.USER,
+            pass: process.env.PASSWORD,
           },
         },
         defaults: {
-          from: '',
+          from: '"F-39" noreply@f-39.com',
         },
       }),
       inject: [ConfigService],
