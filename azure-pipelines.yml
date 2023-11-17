@@ -1,37 +1,24 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
 - main
-
-pool:
-  vmImage: ubuntu-latest
-
-steps:
-- task: AzureFunctionApp@1
+- task: NodeTool@0
   inputs:
-    versionSpec: '14.x'
-  displayName: 'Install Node.js'
-
-- task: PublishBuildArtifacts@1
+    versionSource: 'spec'
+    versionSpec: '6.x'
+    checkLatest: true
+- task: AzureFunctionApp@2
   inputs:
-    PathtoPublish: '$(System.DefaultWorkingDirectory)/dist'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-
-- script:
-    azureSubscription: 'Primer Azure subscription'
+    connectedServiceNameARM: 'Primer Azure subscription(b620a3d7-662f-4cf9-adc4-911996c0a2ed)'
     appType: 'functionAppLinux'
-    appName: 'CVAP Function App'
-    package: '$(System.DefaultWorkingDirectory)/CVAPFunctionApp.zip'
-    runtimeStack: 'NODE|14-lts'
-    startUpCommand: 'npm run start'
+    appName: 'azurefunction-app'
+    deployToSlotOrASE: true
+    resourceGroupName: 'automation-azure'
+    slotName: 'production'
+    package: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    runtimeStack: 'NODE|16'
+    deploymentMethod: 'auto'
     environmentVariables: |
-      DB_HOST=$(DB_HOST)
-      DB_PORT=$(DB_PORT)
-      DB_USERNAME=$(DB_USERNAME)
-      DB_PASSWORD=$(DB_PASSWORD)
-      DB_DATABASE=$(DB_DATABASE)
+      USER=$(USER)
+      PASSWORD=$(PASSWORD)
+      PORT=$(PORT)
   displayName: 'Deploy to Function App'
