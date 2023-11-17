@@ -1,11 +1,13 @@
 
 trigger:
 - main
+
 - task: NodeTool@0
   inputs:
     versionSource: 'spec'
     versionSpec: '6.x'
     checkLatest: true
+
 - task: AzureFunctionApp@2
   inputs:
     connectedServiceNameARM: 'Primer Azure subscription(b620a3d7-662f-4cf9-adc4-911996c0a2ed)'
